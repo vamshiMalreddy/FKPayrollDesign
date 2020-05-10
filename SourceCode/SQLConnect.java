@@ -2,7 +2,7 @@
 import java.sql.*;
 
 class SQLConnect{
-	public static void sql() throws SQLException {
+	public static ResultSet sql(String query) throws SQLException {
 
 		Connection myConn = null;
 		Statement myStmt = null;
@@ -16,28 +16,15 @@ class SQLConnect{
 			myStmt = myConn.createStatement();
 			
 			// 3. Execute SQL query
-			myRs = myStmt.executeQuery("select * from Employees");
+			myRs = myStmt.executeQuery(query);
 			
-			// 4. Process the result set
-			while (myRs.next()) {
-				System.out.println(myRs.getString("Name") + ", " + myRs.getString("worker_type"));
-			}
+			
 		}
 		catch (Exception exc) {
 			exc.printStackTrace();
 		}
-		finally {
-			if (myRs != null) {
-				myRs.close();
-			}
-			
-			if (myStmt != null) {
-				myStmt.close();
-			}
-			
-			if (myConn != null) {
-				myConn.close();
-			}
-		}
+		return myRs;
 	}
 }
+
+// Alter table Emoloyees ADD (amount_to_be_paid INT NOT NULL default 0);
