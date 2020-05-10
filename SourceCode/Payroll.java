@@ -1,4 +1,5 @@
 import java.util.Date;
+import java.sql.*;
 
 abstract class Employee{
 	public int ID;
@@ -58,8 +59,6 @@ class Work_by_hour_employee extends Employee{
 		if(super.union_membership)
 			amount_to_be_paid -= union_service_charge;
 	}
-
-
 }
 
 class Flat_salary_employee extends Employee{
@@ -91,11 +90,14 @@ class Flat_salary_employee extends Employee{
 	}
 }
 
-
 public class Payroll{
 	public static void main(String[] args) {
-		Employee emp = new Work_by_hour_employee(4.5,18,"Vamshi",1.8,"pickup by the paymaster",true);
-		Employee emp1 = new Flat_salary_employee(555,41,"Paxton",6.5,"pickup by the paymaster",true);
-		emp1.submit_commission_receipt(45,new Date(2020,5,10));
-	}
+		
+			try{
+				SQLConnect.sql();
+			}
+			catch (Exception exc) {
+				exc.printStackTrace();
+			}
+		}
 }
