@@ -54,4 +54,22 @@ class UseCases
 		System.out.println("Employee Added!");
 
 	}
+
+	public static void DeleteEmployee()
+	{
+		Scanner sc= new Scanner(System.in);
+
+		System.out.print("Enter ID of the employee:");
+		String ID= sc.nextLine();
+
+		String query = "DELETE FROM Employees WHERE ID="+ID+";";
+		int myRs = 0;
+		try{
+		myRs = SQLConnect.SQL_Update(query);
+		}	
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		System.out.println("Employee Deleted!");
+	}
 }
