@@ -1,47 +1,77 @@
 import java.util.Date;
 
-class Employee{
+abstract class Employee{
 	public int ID;
-	private String Name;
-	Employee(int ID, String Name)
+	protected String Name;
+	protected double commission_rate;
+
+	Employee(int ID, String Name,double commission_rate)
 	{
 		this.ID = ID;
 		this.Name = Name;
+		this.commission_rate = commission_rate;
 	}
 
-	public void submit_time_card(double hours_worked,Date date)
-	{
-		//Implement an exeption here
-	}
+	public abstract void submit_time_card(double hours_worked,Date date);
+	public abstract void submit_commission_receipt(double amount_of_sale,Date date);
 }
 
 class Work_by_hour_employee extends Employee{
 	private double hourly_pay_rate;
 	private double amount_to_be_paid;
 
-	Work_by_hour_employee(double hourly_pay_rate,int ID, String Name)
+    Work_by_hour_employee(double hourly_pay_rate,int ID, String Name,double commission_rate)
 	{
-		super(ID,Name);
+		super(ID,Name,commission_rate);
 		this.amount_to_be_paid = 0;
 		this.hourly_pay_rate = hourly_pay_rate;
 	}
 
 	public void submit_time_card(double hours_worked,Date date)
 	{
-		System.out.println("Current date is " + date); 
+		// System.out.println("Current date is " + date); 
 
 		if(hours_worked > 8)
 			amount_to_be_paid += (8+(hours_worked-8)*1.5)*hourly_pay_rate;
 		else
 			amount_to_be_paid += hours_worked*hourly_pay_rate;
-		System.out.println(amount_to_be_paid);
+		// System.out.println(amount_to_be_paid);
+	}
+
+	public void submit_commission_receipt(double amount_of_sale,Date date)
+	{
+		amount_to_be_paid += amount_of_sale*super.commission_rate;
 	}
 }
 
+class Flat_salary_employees extends Employee{
+	private double salary;
+	private double amount_to_be_paid;
+
+	Flat_salary_employees(double salary,int ID, String Name,double commission_rate)
+	{
+		super(ID,Name,commission_rate);
+		this.amount_to_be_paid = 0;
+		this.salary = salary;
+	}
+
+	public void submit_commission_receipt(double amount_of_sale,Date date)
+	{
+		amount_to_be_paid += amount_of_sale*super.commission_rate;
+		System.out.println(amount_to_be_paid);
+	}
+
+	public void submit_time_card(double hours_worked,Date date)
+	{
+		//Raise Exception
+	}
+}
+
+
 public class Payroll{
 	public static void main(String[] args) {
-		Employee emp = new Work_by_hour_employee(4.5,18,"Vamshi");
-		System.out.println(emp.ID);
-		emp.submit_time_card(9,new Date(2020,5,10));
+		Employee emp = new Work_by_hour_employee(4.5,18,"Vamshi",1.8);
+		Employee emp1 = new Flat_salary_employees(555,41,"Paxton",6.5);
+		emp1.submit_commission_receipt(45,new Date(2020,5,10));
 	}
 }
