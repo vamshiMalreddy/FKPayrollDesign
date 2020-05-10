@@ -93,17 +93,19 @@ class Flat_salary_employee extends Employee{
 public class Payroll{
 	public static void main(String[] args) 
 	{
-		ResultSet myRs = null;
+		// ResultSet myRs = null;
 
-		try{
-			String query = "select * from Employees";
-			myRs = SQLConnect.sql(query);
-			while (myRs.next()) {
-			System.out.println(myRs.getString("Name") + ", " + myRs.getString("worker_type"));
-			}
-		}
-		catch (Exception exc) {
-			exc.printStackTrace();
-		}
+		// try{
+		// 	String query = "select * from Employees";
+		// 	myRs = SQLConnect.sql(query);
+		// 	while (myRs.next()) {
+		// 	System.out.println(myRs.getString("Name") + ", " + myRs.getString("worker_type"));
+		// 	}
+		// }
+		// catch (Exception exc) {
+		// 	exc.printStackTrace();
+		// }
+
+		UseCases.AddEmployee();
 	}
 }
