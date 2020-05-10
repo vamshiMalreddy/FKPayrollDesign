@@ -106,6 +106,6 @@ public class Payroll{
 		// 	exc.printStackTrace();
 		// }
 
-		UseCases.DeleteEmployee();
+		UseCases.UpdateEmployee();
 	}
 }

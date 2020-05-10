@@ -27,7 +27,7 @@ class UseCases
 		method_of_payment= sc.nextLine(); 
 		System.out.print("Union Membership (1(Yes)/0(No)):");
 		union_membership= sc.nextLine(); 
-		if(employee_type == "Work_by_hour_employee")
+		if(employee_type.equals("Work_by_hour_employee"))
 		{
 			System.out.print("Enter Hourly pay rate:");
 			hourly_pay_rate= sc.nextLine(); 
@@ -71,5 +71,31 @@ class UseCases
 			exc.printStackTrace();
 		}
 		System.out.println("Employee Deleted!");
+	}
+
+	public static void UpdateEmployee()
+	{
+		Scanner sc= new Scanner(System.in);
+
+		System.out.print("Enter ID of the employee:");
+		String ID= sc.nextLine();
+		System.out.print("Enter column of the employee to be updated:");
+		String column= sc.nextLine();
+		System.out.print("Enter value of "+column+":" );
+		String value= sc.nextLine();
+		
+		if(column.equals("Name")||column.equals("method_of_payment") ||column.equals("worker_type"))
+		{
+			value = "'"+value+"'";
+		}
+		String query = "UPDATE Employees SET "+ column+ " = "+value+" WHERE ID="+ID+";";
+		int myRs = 0;
+		try{
+		myRs = SQLConnect.SQL_Update(query);
+		}	
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		System.out.println("Employee Updated!");
 	}
 }
