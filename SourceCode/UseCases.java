@@ -152,4 +152,56 @@ class UseCases
 		}
 
 	}
+
+	public static void PostSalesReceipt()
+	{
+		Scanner sc= new Scanner(System.in);
+
+		System.out.print("Enter Your ID:");
+		String ID= sc.nextLine(); 
+		System.out.print("Enter Date (YYYY-MM-DD):");
+		String Date= sc.nextLine(); 
+		System.out.print("Enter amount of the sales:");
+		double sale_amount= sc.nextDouble(); 
+		
+		String query = 
+		"INSERT INTO SalesReciepts VALUES ("
+		+ID+",'"+Date+"',"+sale_amount+");";
+
+		int myRs = 0;
+		try{
+		myRs = SQLConnect.SQL_Update(query);
+		}	
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		System.out.println("SalesReceipt Added!");
+
+
+		double commission_rate = 0.0;
+
+ 		query = "SELECT * FROM Employees WHERE ID = "+ID;
+		ResultSet myRes = null;
+		try{
+		myRes = SQLConnect.SQL_Query(query);
+		myRes.next();
+		commission_rate = myRes.getDouble("commission_rate");
+		// System.out.println(hourly_pay_rate);
+		}	
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+
+
+		query = "UPDATE Employees SET "+ "amount_to_be_paid"+ " = amount_to_be_paid+"+commission_rate +"*"+sale_amount+" WHERE ID="+ID+";";
+		// System.out.println(query);
+		boolean myR = false;
+		try{
+		myR = SQLConnect.SQL_execute(query);
+		}	
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+
+	}
 }
