@@ -9,24 +9,18 @@ class UseCases
 		Scanner sc= new Scanner(System.in);
 
 		String salary = "NULL";
-		String employee_type;
-		String ID;
-		String Name;
-		String commission_rate;
-		String method_of_payment;
-		String union_membership;
 		String hourly_pay_rate  = "NULL";
 
 		System.out.print("Enter Name:");
-		Name= sc.nextLine(); 
+		String Name= sc.nextLine(); 
 		System.out.print("Work_by_hour_employee/Flat_salary_employee:");
-		employee_type= sc.nextLine(); 
+		String employee_type= sc.nextLine(); 
 		System.out.print("Enter Commission Rate:");
-		commission_rate= sc.nextLine(); 
+		String commission_rate= sc.nextLine(); 
 		System.out.print("Enter Method of Payment:");
-		method_of_payment= sc.nextLine(); 
+		String method_of_payment= sc.nextLine(); 
 		System.out.print("Union Membership (1(Yes)/0(No)):");
-		union_membership= sc.nextLine(); 
+		String union_membership= sc.nextLine(); 
 		if(employee_type.equals("Work_by_hour_employee"))
 		{
 			System.out.print("Enter Hourly pay rate:");
@@ -97,5 +91,65 @@ class UseCases
 			exc.printStackTrace();
 		}
 		System.out.println("Employee Updated!");
+	}
+
+	public static void PostTimeCard()
+	{
+		Scanner sc= new Scanner(System.in);
+
+		System.out.print("Enter Your ID:");
+		String ID= sc.nextLine(); 
+		System.out.print("Enter Date (YYYY-MM-DD):");
+		String Date= sc.nextLine(); 
+		System.out.print("Enter Hours Worked:");
+		double Hours_worked= sc.nextDouble(); 
+		
+		String query = 
+		"INSERT INTO TimeCards VALUES ("
+		+ID+",'"+Date+"',"+Hours_worked+");";
+
+		int myRs = 0;
+		try{
+		myRs = SQLConnect.SQL_Update(query);
+		}	
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		System.out.println("TimeCard Added!");
+
+
+
+		double effective_hours_worked;
+		if(Hours_worked > 8.0)
+			effective_hours_worked = (8+(Hours_worked-8)*1.5);
+		else
+			effective_hours_worked = Hours_worked;
+
+
+		double hourly_pay_rate = 0.0;
+
+ 		query = "SELECT * FROM Employees WHERE ID = "+ID;
+		ResultSet myRes = null;
+		try{
+		myRes = SQLConnect.SQL_Query(query);
+		myRes.next();
+		hourly_pay_rate = myRes.getDouble("hourly_pay_rate");
+		// System.out.println(hourly_pay_rate);
+		}	
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+
+
+		query = "UPDATE Employees SET "+ "amount_to_be_paid"+ " = amount_to_be_paid+"+effective_hours_worked +"*"+hourly_pay_rate+" WHERE ID="+ID+";";
+		// System.out.println(query);
+		boolean myR = false;
+		try{
+		myR = SQLConnect.SQL_execute(query);
+		}	
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+
 	}
 }
