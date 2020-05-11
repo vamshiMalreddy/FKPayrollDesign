@@ -224,4 +224,30 @@ class UseCases
 			exc.printStackTrace();
 		}
 	}
+
+	public static void PayFlatSalary()
+	{
+		String query = "UPDATE Employees SET "+ "amount_to_be_paid"+ "= 0"+" WHERE worker_type='Flat_salary_employee';";
+		// System.out.println(query);
+		boolean myR = false;
+		try{
+		myR = SQLConnect.SQL_execute(query);
+		}	
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
+
+	public static void PayWeekWorkerSalary()
+	{
+		String query = "UPDATE Employees SET "+ "amount_to_be_paid"+ "= 0"+" WHERE worker_type='Work_by_hour_employee';";
+		// System.out.println(query);
+		boolean myR = false;
+		try{
+		myR = SQLConnect.SQL_execute(query);
+		}	
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
 }
