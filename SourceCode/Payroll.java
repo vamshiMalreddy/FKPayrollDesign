@@ -4,7 +4,8 @@ import java.text.SimpleDateFormat;
 import java.sql.*;
 
 
-public class Payroll{
+
+publici class Payroll{
 	public static void main(String[] args) 
 	{
 		final Calendar calendar = Calendar.getInstance();
@@ -13,11 +14,11 @@ public class Payroll{
 		String today = new SimpleDateFormat("dd").format(date); 
 		System.out.println(day + " "+today);
 
-		if(today.equals("11"))
+		if(today.equals("28"))
 			UseCases.PayFlatSalary();
-		if(day == 2)
+		if(day == 6)
 		{
-			// PostServiceCharge();
+			PostServiceCharge();
 			UseCases.PayWeekWorkerSalary();
 		}
 
