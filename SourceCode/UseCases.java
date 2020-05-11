@@ -21,6 +21,7 @@ class UseCases
 		String method_of_payment= sc.nextLine(); 
 		System.out.print("Union Membership (1(Yes)/0(No)):");
 		String union_membership= sc.nextLine(); 
+
 		if(employee_type.equals("Work_by_hour_employee"))
 		{
 			System.out.print("Enter Hourly pay rate:");
@@ -203,5 +204,24 @@ class UseCases
 			exc.printStackTrace();
 		}
 
+	}
+
+	public static void PostServiceCharge()
+	{
+		Scanner sc= new Scanner(System.in);
+
+		System.out.print("Enter Union Service Charge:");
+		double service_charge= sc.nextDouble(); 
+
+
+		String query = "UPDATE Employees SET "+ "amount_to_be_paid"+ "= amount_to_be_paid-" +service_charge+" WHERE union_membership=1;";
+		System.out.println(query);
+		boolean myR = false;
+		try{
+		myR = SQLConnect.SQL_execute(query);
+		}	
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
 	}
 }

@@ -93,6 +93,6 @@ class Flat_salary_employee extends Employee{
 public class Payroll{
 	public static void main(String[] args) 
 	{
-		UseCases.PostSalesReceipt();
+		UseCases.PostServiceCharge();
 	}
 }
